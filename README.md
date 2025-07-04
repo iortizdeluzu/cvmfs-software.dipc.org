@@ -1,0 +1,1 @@
+# cvmfs-software.dipc.org
