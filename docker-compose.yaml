@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  stratum0:
+    build:
+      context: ./stratum0
+    container_name: Stratum0
+    hostname: stratum0
+    ports:
+      - "2222:22"  # SSH access from host (optional)
+    networks:
+      - stratum_net
+
+  publisher-1:
+    build:
+      context: ./publisher
+    container_name: Publisher-1
+    hostname: publisher-1
+    depends_on:
+      - stratum0
+    networks:
+      - stratum_net
+
+  publisher-2:
+    build:
+      context: ./publisher
+    container_name: Publisher-2
+    hostname: publisher-2
+    depends_on:
+      - stratum0
+    networks:
+      - stratum_net
+
+networks:
+  stratum_net:
+    driver: bridge
+
