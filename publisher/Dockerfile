@@ -4,7 +4,7 @@ RUN yum update -y && yum install -y \
     openssh \
     openssh-clients \
     iputils \
-    sudo \
+    sudo rsync \
     sshpass
 
 # Crear usuario normal

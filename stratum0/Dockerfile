@@ -82,9 +82,9 @@ ENV EASYBUILD_PREFIX=/cvmfs/software.dipc.org
 # (Optional) Add easybuild to PATH for convenience (adjust path if needed)
 ENV PATH=$EASYBUILD_PREFIX/bin:$PATH
 
+#COPY entrypoint.sh /entrypoint.sh
+#RUN chmod +x /entrypoint.sh
+#ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["/usr/sbin/sshd", "-D"]
 
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
