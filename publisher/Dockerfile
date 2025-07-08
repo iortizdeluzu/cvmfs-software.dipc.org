@@ -1,13 +1,13 @@
 FROM rockylinux:8
 
-RUN dnf install -y \
+RUN yum update -y && yum install -y \
     openssh \
     openssh-clients \
-    sshpass \
     iputils \
-    sudo rsync 
+    sudo \
+    sshpass
 
-# Create user to simulate a normal environment
+# Crear usuario normal
 RUN useradd -m -s /bin/bash publisher && \
     echo "publisher:publisher" | chpasswd && \
     mkdir -p /home/publisher/.ssh && \
@@ -80,15 +80,12 @@ RUN yum install -y \
 RUN python3 -m pip install --upgrade pip setuptools wheel && \
     python3 -m pip install easybuild easybuild-easyconfigs
 
-# Switch to stratum user
-USER stratum
-WORKDIR /home/stratum
-
 # Set environment variable for EasyBuild prefix
 ENV EASYBUILD_PREFIX=/cvmfs/software.dipc.org
 
 # (Optional) Add easybuild to PATH for convenience (adjust path if needed)
 ENV PATH=$EASYBUILD_PREFIX/bin:$PATH
+
 
 USER publisher
 WORKDIR /home/publisher

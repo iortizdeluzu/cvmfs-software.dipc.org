@@ -9,11 +9,14 @@ if [ ! -f ~/.ssh/id_rsa ]; then
 fi
 
 echo "[*] Aceptando clave host de Stratum0..."
+#ssh-keyscan -H stratum0 >> ~/.ssh/known_hosts
+ssh-keygen -R stratum0 2>/dev/null
 ssh-keyscan -H stratum0 >> ~/.ssh/known_hosts
 
 echo "[*] Enviando clave pública a Stratum0..."
-until sshpass -p stratum ssh-copy-id -o StrictHostKeyChecking=no stratum@stratum0; do
-    echo "Esperando acceso SSH..."
+for i in {1..10}; do
+    sshpass -p stratum ssh-copy-id -o StrictHostKeyChecking=no stratum@stratum0 && break
+    echo "Esperando acceso SSH... intento $i"
     sleep 2
 done
 
